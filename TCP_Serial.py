@@ -30,12 +30,12 @@ while True:
     print 'Conectado por', cliente;
     while True:
         msg = con.recv(1024)
-	      if (string.find(msg, "1") >=0):
+	if (string.find(msg, "1") >=0):
             print "Ligando...";
-            #comport.write("L");
+            comport.write("L");
         if (string.find(msg, "2") >= 0):
             print "desligando...";	
-            #comport.write("D");
+            comport.write("D");
         if not msg: break;
     print 'Finalizando conexao do cliente', cliente;
     con.close();
