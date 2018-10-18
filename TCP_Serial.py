@@ -29,7 +29,7 @@ while True:
     con, cliente = tcp.accept();
     print 'Conectado por', cliente;
     while True:
-        msg = con.recv(1024)
+         msg = con.recv(1024)
 	if (string.find(msg, "1") >=0):
             print "Ligando...";
             comport.write("L");
