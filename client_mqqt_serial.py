@@ -13,25 +13,26 @@ import paho.mqtt.client as mqtt #import the client
 import time
 import serial
 
-SERVIDOR = "soldier.cloudmqtt.com"
+#dados para conectar a um MQTT broker
+SERVIDOR = "127.0.0.1"
 PORTA    = 13919 
-USUARIO  = "nmrbnrst"
-SENHA    = "F8OUh79L_T07"
+USUARIO  = "usuario"
+SENHA    = "senha"
 TOPICO   = "casa/quarto"
 
+#dados da porta COM
 PORTA_COM = "COM5"
 BAUD_RATE = 115200
 
 def escrever_porta(str_cmd):
    try:
        cmd = str.encode(str_cmd);
-       print('Escrevendo na porta',str_cmd);
+       print('Escrevendo na porta',cmd);
        porta = serial.Serial(PORTA_COM, BAUD_RATE)
-       porta.write(str_cmd)
-       time.sleep(5)
+       porta.write(cmd)       
        porta.close()
        
-       print('[+] Mensagem enviada para a porta')
+       print('[+] Mensagem enviada para a porta',PORTA_COM)
    except:
        #serial.SerialException:
        print("[!] ERRO: Verifique se ha algum dispositivo conectado na porta!")
