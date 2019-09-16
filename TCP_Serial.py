@@ -24,18 +24,21 @@ tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
 tcp.bind((HOST, PORT));
 tcp.listen(1);
 
-print 'Escutando...';
+print ('Escutando...');
 while True:
     con, cliente = tcp.accept();
-    print 'Conectado por', cliente;
+    print ('Conectado por', cliente);
     while True:
-        msg = con.recv(1024)
-	 if (string.find(msg, "1") >= 0):
-            print "Ligando...";
-            comport.write("L");
-        if (string.find(msg, "2") >= 0):
-            print "desligando...";	
-            comport.write("D");
+        msg = con.recv(1024);
+        strmsg = msg.decode("utf-8");
+        print ('Recebido:',strmsg);
+        
+        if (strmsg == '1'):
+            print ("Ligando...");
+            comport.write(str.encode("L"));
+        if (strmsg == '2'):
+            print ("desligando...");	
+            comport.write(str.encode("D"));
         if not msg: break;
-    print 'Finalizando conexao do cliente', cliente;
+    print ('Finalizando conexao do cliente', cliente);
     con.close();
