@@ -15,7 +15,7 @@ import serial
 
 #dados para conectar a um MQTT broker
 SERVIDOR = "127.0.0.1"
-PORTA    = 13919 
+PORTA    = 1883 
 USUARIO  = "usuario"
 SENHA    = "senha"
 TOPICO   = "casa/quarto"
