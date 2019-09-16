@@ -21,8 +21,6 @@ TOPICO   = "casa/quarto"
 PORTA_COM = "COM5"
 BAUD_RATE = 115200
 
-comport = serial.Serial(PORTA_COM, BAUD_RATE);
-
 def escrever_porta(str_cmd):
    try:
        cmd = str.encode(str_cmd);
@@ -80,6 +78,7 @@ def connect_broker():
         print('[!] Eita, deu erro!!!')
         return 0
 
+comport = serial.Serial(PORTA_COM, BAUD_RATE);
 connect_broker()
 
 
