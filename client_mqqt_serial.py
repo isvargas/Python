@@ -9,33 +9,30 @@
 # python -m pip install pyserial
 #
 # I.S.V
-import paho.mqtt.client as mqtt #import the client
-import time
+import paho.mqtt.client as mqtt
 import serial
 
-#dados para conectar a um MQTT broker
 SERVIDOR = "127.0.0.1"
 PORTA    = 1883 
-USUARIO  = "usuario"
-SENHA    = "senha"
+USUARIO  = "user"
+SENHA    = "pass"
 TOPICO   = "casa/quarto"
 
-#dados da porta COM
 PORTA_COM = "COM5"
 BAUD_RATE = 115200
+
+comport = serial.Serial(PORTA_COM, BAUD_RATE);
 
 def escrever_porta(str_cmd):
    try:
        cmd = str.encode(str_cmd);
-       print('Escrevendo na porta',cmd);
-       porta = serial.Serial(PORTA_COM, BAUD_RATE)
-       porta.write(cmd)       
-       porta.close()
+       print('Escrevendo na porta',str_cmd);
+       comport.write(cmd);
        
        print('[+] Mensagem enviada para a porta',PORTA_COM)
    except:
        #serial.SerialException:
-       print("[!] ERRO: Verifique se ha algum dispositivo conectado na porta!")
+       print("[!] ERRO: Verifique se ha algum dispositivo conectado na porta",PORTA_COM)
 
 
 def ligar():
@@ -48,11 +45,9 @@ def exec_cmd(cmd):
     try:
         if '#LIGAR#' in cmd:
             ligar()
-            return 1
         
         if '#DESLIGAR#' in cmd:
             desligar()
-            return 1
     except:
         print('[!] Erro ao executar comando',cmd)
 
@@ -70,7 +65,7 @@ def connect_broker():
         #client = mqtt.Client("teste",transport='websockets')
         client.on_message=on_message   #attach function to callback
 
-        print("[+] Conectando ao broker MQTT", SERVIDOR)
+        print("[+] Conectando ao broker MQTT",SERVIDOR)
         client.username_pw_set(username=USUARIO,password=SENHA)
         client.connect(SERVIDOR,PORTA)  #connect to broker
         client.loop_start()             #start the loop
@@ -81,8 +76,6 @@ def connect_broker():
         print("[+] Publicando mensagen no topico",TOPICO)
         client.publish(TOPICO,"HELLO")
 
-        #time.sleep(4)      #wait
-        #client.loop_stop() #stop the loop
     except:
         print('[!] Eita, deu erro!!!')
         return 0
